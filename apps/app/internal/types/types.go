@@ -15,3 +15,16 @@ type CreateDeptReq struct {
 type CreateDeptResp struct {
 	UUID string `json:"uuid"`
 }
+
+type CreateUserReq struct {
+	Mobile string `json:"mobile"`
+	Name   string `json:"name"`
+	Email  string `json:"email"`
+	Avatar string `json:"avatar"`
+	DeptId string `json:"deptId"`
+	RoleId string `json:"roleId"`
+}
+
+type CreateUserResp struct {
+	UUID string `json:"uuid"`
+}

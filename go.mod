@@ -3,6 +3,8 @@ module fiber-g
 go 1.19
 
 require (
+	github.com/google/uuid v1.3.0
+	github.com/lib/pq v1.10.7
 	github.com/zeromicro/go-zero v1.4.2
 	google.golang.org/grpc v1.50.1
 	google.golang.org/protobuf v1.28.1
@@ -27,7 +29,6 @@ require (
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/google/go-cmp v0.5.8 // indirect
 	github.com/google/gofuzz v1.2.0 // indirect
-	github.com/google/uuid v1.3.0 // indirect
 	github.com/googleapis/gnostic v0.5.5 // indirect
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.7.0 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect

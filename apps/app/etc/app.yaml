@@ -1,9 +1,17 @@
 Name: app
 Host: 0.0.0.0
-Port: 8001
+Port: 8000
 
 DeptRpc:
   Etcd:
     Hosts:
       - 127.0.0.1:2379
     Key: dept.rpc
+  NonBlock: true
+
+UserRpc:
+  Etcd:
+    Hosts:
+      - 127.0.0.1:2379
+    Key: user.rpc
+  NonBlock: true

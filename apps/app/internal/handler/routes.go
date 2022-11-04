@@ -6,6 +6,7 @@ import (
 
 	app "fiber-g/apps/app/internal/handler/app"
 	dept "fiber-g/apps/app/internal/handler/dept"
+	user "fiber-g/apps/app/internal/handler/user"
 	"fiber-g/apps/app/internal/svc"
 
 	"github.com/zeromicro/go-zero/rest"
@@ -32,5 +33,16 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 			},
 		},
 		rest.WithPrefix("/api/v1/dept"),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodPost,
+				Path:    "/create",
+				Handler: user.CreateUserHandler(serverCtx),
+			},
+		},
+		rest.WithPrefix("/api/v1/user"),
 	)
 }

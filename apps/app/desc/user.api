@@ -1,0 +1,26 @@
+syntax = "v1"
+
+type (
+    CreateUserReq {
+        Mobile string `json:"mobile"`
+        Name string `json:"name"`
+        Email string `json:"email"`
+        Avatar string `json:"avatar"`
+        DeptId string `json:"deptId"`
+        RoleId string `json:"roleId"`
+    }
+
+    CreateUserResp {
+        UUID string `json:"uuid"`
+    }
+)
+
+@server(
+    group : user
+    prefix :/api/v1/user
+)
+
+service app {
+    @handler CreateUser
+    post /create (CreateUserReq) returns (CreateUserResp)
+}
