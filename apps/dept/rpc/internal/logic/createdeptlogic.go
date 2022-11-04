@@ -31,6 +31,7 @@ func (l *CreateDeptLogic) CreateDept(in *dept.CreateDeptReq) (*dept.CreateDeptRe
 		Name:     in.Name,
 		Level:    in.Level,
 		ParentId: in.ParentId,
+		HeaderId: in.HeaderId,
 	}
 
 	_, err := l.svcCtx.DeptModel.Insert(l.ctx, &newDept)

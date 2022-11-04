@@ -29,6 +29,7 @@ func (l *CreateDeptLogic) CreateDept(req *types.CreateDeptReq) (resp *types.Crea
 		Name:     req.Name,
 		ParentId: req.ParentId,
 		Level:    req.Level,
+		HeaderId: req.HeaderId,
 	})
 	if err != nil {
 		return nil, err

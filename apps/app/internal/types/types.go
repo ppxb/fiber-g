@@ -9,6 +9,7 @@ type CreateDeptReq struct {
 	Name     string `json:"name"`
 	ParentId string `json:"parentId"`
 	Level    int64  `json:"level"`
+	HeaderId string `json:"headerId"`
 }
 
 type CreateDeptResp struct {

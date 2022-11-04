@@ -8,6 +8,7 @@ message CreateDeptReq {
   string name = 1;
   string parentId = 2;
   int64 level = 3;
+  string headerId = 4;
 }
 
 message CreateDeptResp {

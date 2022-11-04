@@ -43,6 +43,7 @@ type (
 		Name       string    `db:"name"`        // 部门名称
 		Level      int64     `db:"level"`       // 层级
 		ParentId   string    `db:"parent_id"`   // 上级部门ID
+		HeaderId   string    `db:"header_id"`   // 部门负责人ID
 		Status     int64     `db:"status"`      // 状态：0-正常 1-禁用
 		CreateTime time.Time `db:"create_time"` // 创建时间
 		UpdateTime time.Time `db:"update_time"` // 更新时间
@@ -85,8 +86,8 @@ func (m *defaultDeptsModel) FindOne(ctx context.Context, id string) (*Depts, err
 func (m *defaultDeptsModel) Insert(ctx context.Context, data *Depts) (sql.Result, error) {
 	deptsIdKey := fmt.Sprintf("%s%v", cacheDeptsIdPrefix, data.Id)
 	ret, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
-		query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?, ?)", m.table, deptsRowsExpectAutoSet)
-		return conn.ExecCtx(ctx, query, data.Id, data.Name, data.Level, data.ParentId, data.Status)
+		query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?, ?, ?)", m.table, deptsRowsExpectAutoSet)
+		return conn.ExecCtx(ctx, query, data.Id, data.Name, data.Level, data.ParentId, data.HeaderId, data.Status)
 	}, deptsIdKey)
 	return ret, err
 }
@@ -95,7 +96,7 @@ func (m *defaultDeptsModel) Update(ctx context.Context, data *Depts) error {
 	deptsIdKey := fmt.Sprintf("%s%v", cacheDeptsIdPrefix, data.Id)
 	_, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
 		query := fmt.Sprintf("update %s set %s where `id` = ?", m.table, deptsRowsWithPlaceHolder)
-		return conn.ExecCtx(ctx, query, data.Name, data.Level, data.ParentId, data.Status, data.Id)
+		return conn.ExecCtx(ctx, query, data.Name, data.Level, data.ParentId, data.HeaderId, data.Status, data.Id)
 	}, deptsIdKey)
 	return err
 }
