@@ -1,0 +1,23 @@
+syntax = "v1"
+
+type (
+    CreateDeptReq {
+        Name string `json:"name"`
+        ParentId string `json:"parentId"`
+        Level int64 `json:"level"`
+    }
+
+    CreateDeptResp {
+        UUID string `json:"uuid"`
+    }
+)
+
+@server(
+    group : dept
+    prefix:api/v1/dept
+)
+
+service app {
+    @handler createDept
+    post /create (CreateDeptReq) returns (CreateDeptResp)
+}

@@ -1,0 +1,13 @@
+Name: dept.rpc
+ListenOn: 127.0.0.1:9001
+
+Etcd:
+  Hosts:
+    - 127.0.0.1:2379
+  Key: dept.rpc
+
+CacheRedis:
+  - Host: 127.0.0.1:6379
+    Type: node
+
+DataSource: root:123456@tcp(127.0.0.1:3306)/fiber_dept?charset=utf8mb4&parseTime=True&loc=Local

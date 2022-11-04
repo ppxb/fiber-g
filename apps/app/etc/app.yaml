@@ -1,0 +1,9 @@
+Name: app
+Host: 0.0.0.0
+Port: 8001
+
+DeptRpc:
+  Etcd:
+    Hosts:
+      - 127.0.0.1:2379
+    Key: dept.rpc

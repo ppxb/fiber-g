@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package dept;
+
+option go_package = "./dept";
+
+message CreateDeptReq {
+  string name = 1;
+  string parentId = 2;
+  int64 level = 3;
+}
+
+message CreateDeptResp {
+  string uuid = 1;
+}
+
+service Dept {
+  rpc CreateDept(CreateDeptReq) returns(CreateDeptResp);
+}
