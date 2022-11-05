@@ -28,3 +28,32 @@ type CreateUserReq struct {
 type CreateUserResp struct {
 	UUID string `json:"uuid"`
 }
+
+type CreateAssetReq struct {
+	Serial         string `json:"serial"`
+	Name           string `json:"name"`
+	ProjectId      string `json:"projectId"`
+	SonProjectId   string `json:"sonProjectId"`
+	PartProjectId  string `json:"partProjectId"`
+	Type           string `json:"type"`
+	SubDistrict    string `json:"subDistrict"`
+	Brand          string `json:"brand"`
+	Model          string `json:"model"`
+	Unit           string `json:"unit"`
+	Params         string `json:"params"`
+	Value          string `json:"value"`
+	Address        string `json:"address"`
+	Long           string `json:"long"`
+	Lat            string `json:"lat"`
+	ImgUrl         string `json:"imgUrl"`
+	SystemLoginUrl string `json:"systemLoginUrl"`
+	SystemLoginPwd string `json:"systemLoginPwd"`
+}
+
+type CreateAssetResp struct {
+	UUID string `json:"uuid"`
+}
+
+type ImportAssetResp struct {
+	UUID string `json:"uuid"`
+}

@@ -1,0 +1,45 @@
+syntax = "v1"
+
+type (
+    CreateAssetReq {
+        Serial string `json:"serial"`
+        Name string `json:"name"`
+        ProjectId string `json:"projectId"`
+        SonProjectId string `json:"sonProjectId"`
+        PartProjectId string `json:"partProjectId"`
+        Type string `json:"type"`
+        SubDistrict string `json:"subDistrict"`
+        Brand string `json:"brand"`
+        Model string `json:"model"`
+        Unit string `json:"unit"`
+        Params string `json:"params"`
+        Value string `json:"value"`
+        Address string `json:"address"`
+        Long string `json:"long"`
+        Lat string `json:"lat"`
+        ImgUrl string `json:"imgUrl"`
+        SystemLoginUrl string `json:"systemLoginUrl"`
+        SystemLoginPwd string `json:"systemLoginPwd"`
+    }
+
+    CreateAssetResp {
+        UUID string `json:"uuid"`
+    }
+
+    ImportAssetResp {
+        UUID string `json:"uuid"`
+    }
+)
+
+@server(
+    group : asset
+    prefix :api/v1/asset
+)
+
+service app {
+    @handler createAsset
+    post /create (CreateAssetReq) returns (CreateAssetResp)
+
+    @handler importAsset
+    post /import returns (ImportAssetResp)
+}

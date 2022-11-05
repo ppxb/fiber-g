@@ -1,0 +1,13 @@
+Name: asset.rpc
+ListenOn: 0.0.0.0:9003
+
+Etcd:
+  Hosts:
+    - 127.0.0.1:2379
+  Key: asset.rpc
+
+DataSource: root:123456@tcp(127.0.0.1:3306)/fiber_asset?charset=utf8mb4&parseTime=True&loc=Local
+
+CacheRedis:
+  - Host: 127.0.0.1:6379
+    Type: node

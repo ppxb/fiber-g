@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+package asset;
+
+option go_package = "./asset";
+
+message CreateAssetReq{
+  string serial = 1;
+  string name = 2;
+  string projectId = 3;
+  string sonProjectId = 4;
+  string partProjectId = 5;
+  string type = 6;
+  string subDistrict = 7;
+  string brand = 8;
+  string model = 9;
+  string unit = 10;
+  string params = 11;
+  string  value = 12;
+  string address = 13;
+  string long = 14;
+  string lat = 15;
+  string imgUrl = 16;
+  string systemLoginUrl = 17;
+  string systemLoginPwd = 18;
+}
+
+message CreateAssetResp{
+  string uuid = 1;
+}
+
+service Asset{
+  rpc CreateAsset(CreateAssetReq)returns(CreateAssetResp);
+}

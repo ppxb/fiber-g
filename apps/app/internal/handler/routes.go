@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	app "fiber-g/apps/app/internal/handler/app"
+	asset "fiber-g/apps/app/internal/handler/asset"
 	dept "fiber-g/apps/app/internal/handler/dept"
 	user "fiber-g/apps/app/internal/handler/user"
 	"fiber-g/apps/app/internal/svc"
@@ -44,5 +45,21 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 			},
 		},
 		rest.WithPrefix("/api/v1/user"),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodPost,
+				Path:    "/create",
+				Handler: asset.CreateAssetHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/import",
+				Handler: asset.ImportAssetHandler(serverCtx),
+			},
+		},
+		rest.WithPrefix("/api/v1/asset"),
 	)
 }

@@ -15,3 +15,10 @@ UserRpc:
       - 127.0.0.1:2379
     Key: user.rpc
   NonBlock: true
+
+AssetRpc:
+  Etcd:
+    Hosts:
+      - 127.0.0.1:2379
+    Key: asset.rpc
+  NonBlock: true
