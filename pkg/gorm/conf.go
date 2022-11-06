@@ -10,7 +10,7 @@ import (
 	"time"
 )
 
-type GormConf struct {
+type Conf struct {
 	Type        string `json:"Type"`        // type of database such as mysql or postgres
 	Host        string `json:"Host"`        // database address
 	Port        int    `json:"Port"`        // database port
@@ -23,26 +23,26 @@ type GormConf struct {
 	LogMode     string `json:"LogMode"`     // set gorm global log mode
 }
 
-func (g *GormConf) MysqlDsn() string {
+func (g *Conf) MysqlDsn() string {
 	return fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?%s", g.Username, g.Password, g.Host, g.Port, g.DbName, g.Config)
 }
 
-func (g *GormConf) PostgresDsn() string {
+func (g *Conf) PostgresDsn() string {
 	return fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%d %s", g.Host, g.Username, g.Password, g.DbName, g.Port, g.Config)
 }
 
-func (g *GormConf) NewGormDb() (*gorm.DB, error) {
+func (g *Conf) NewGormDb() (*gorm.DB, error) {
 	switch g.Type {
 	case "mysql":
-		return GormMysql(g)
+		return Mysql(g)
 	case "postgres":
-		return GormPostgres(g)
+		return Postgres(g)
 	default:
-		return GormMysql(g)
+		return Mysql(g)
 	}
 }
 
-func GormMysql(g *GormConf) (*gorm.DB, error) {
+func Mysql(g *Conf) (*gorm.DB, error) {
 	if g.DbName == "" {
 		return nil, errors.New("database name cannot be empty")
 	}
@@ -71,7 +71,7 @@ func GormMysql(g *GormConf) (*gorm.DB, error) {
 	}
 }
 
-func GormPostgres(g *GormConf) (*gorm.DB, error) {
+func Postgres(g *Conf) (*gorm.DB, error) {
 	if g.DbName == "" {
 		return nil, errors.New("database name cannot be empty")
 	}
