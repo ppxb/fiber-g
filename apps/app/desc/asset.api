@@ -29,6 +29,15 @@ type (
     ImportAssetResp {
         UUID string `json:"uuid"`
     }
+
+    ProjectReq {
+        Name string `json:"name"`
+        ParentProjectId string `json:"parentProjectId"`
+    }
+
+    ProjectResp {
+        UUID string `json:"uuid"`
+    }
 )
 
 @server(
@@ -42,4 +51,7 @@ service app {
 
     @handler importAsset
     post /import returns (ImportAssetResp)
+
+    @handler createProject
+    post /project/create (ProjectReq) returns (ProjectResp)
 }

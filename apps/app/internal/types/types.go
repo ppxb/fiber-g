@@ -57,3 +57,12 @@ type CreateAssetResp struct {
 type ImportAssetResp struct {
 	UUID string `json:"uuid"`
 }
+
+type ProjectReq struct {
+	Name            string `json:"name"`
+	ParentProjectId string `json:"parentProjectId"`
+}
+
+type ProjectResp struct {
+	UUID string `json:"uuid"`
+}

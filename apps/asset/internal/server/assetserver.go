@@ -26,3 +26,8 @@ func (s *AssetServer) CreateAsset(ctx context.Context, in *asset.CreateAssetReq)
 	l := logic.NewCreateAssetLogic(ctx, s.svcCtx)
 	return l.CreateAsset(in)
 }
+
+func (s *AssetServer) CreateProject(ctx context.Context, in *asset.ProjectReq) (*asset.ProjectResp, error) {
+	l := logic.NewCreateProjectLogic(ctx, s.svcCtx)
+	return l.CreateProject(in)
+}

@@ -1,8 +1,10 @@
 package main
 
 import (
+	"fiber-g/apps/asset/internal/model"
 	"flag"
 	"fmt"
+	"github.com/zeromicro/go-zero/core/logx"
 
 	"fiber-g/apps/asset/asset"
 	"fiber-g/apps/asset/internal/config"
@@ -33,6 +35,13 @@ func main() {
 		}
 	})
 	defer s.Stop()
+
+	err := ctx.Db.AutoMigrate(
+		&model.Project{},
+	)
+	if err != nil {
+		logx.Errorw("database error", logx.Field("detail", err.Error()))
+	}
 
 	fmt.Printf("Starting rpc server at %s...\n", c.ListenOn)
 	s.Start()

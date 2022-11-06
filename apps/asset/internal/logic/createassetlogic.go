@@ -6,6 +6,7 @@ import (
 	"fiber-g/apps/asset/internal/model"
 	"github.com/google/uuid"
 	"google.golang.org/grpc/status"
+	"strconv"
 
 	"fiber-g/apps/asset/asset"
 	"fiber-g/apps/asset/internal/svc"
@@ -28,6 +29,7 @@ func NewCreateAssetLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Creat
 }
 
 func (l *CreateAssetLogic) CreateAsset(in *asset.CreateAssetReq) (*asset.CreateAssetResp, error) {
+	v, _ := strconv.ParseFloat(in.Value, 64)
 	newAsset := model.Assets{
 		Id:             uuid.NewString(),
 		Name:           in.Name,
@@ -41,7 +43,7 @@ func (l *CreateAssetLogic) CreateAsset(in *asset.CreateAssetReq) (*asset.CreateA
 		Model:          in.Model,
 		Unit:           in.Unit,
 		Params:         sql.NullString{String: in.Params},
-		Value:          in.Value,
+		Value:          v,
 		Address:        in.Address,
 		Long:           in.Long,
 		Lat:            in.Lat,

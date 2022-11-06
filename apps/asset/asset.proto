@@ -29,6 +29,16 @@ message CreateAssetResp{
   string uuid = 1;
 }
 
+message ProjectReq{
+  string Name = 1;
+  string ParentProjectId = 2;
+}
+
+message ProjectResp{
+  string uuid = 1;
+}
+
 service Asset{
   rpc CreateAsset(CreateAssetReq)returns(CreateAssetResp);
+  rpc CreateProject(ProjectReq)returns(ProjectResp);
 }
