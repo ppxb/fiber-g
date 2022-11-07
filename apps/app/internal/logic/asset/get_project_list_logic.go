@@ -43,6 +43,7 @@ func (l *GetProjectListLogic) GetProjectList(req *types.PageInfoReq) (resp *type
 		Msg:  "请求成功",
 		Data: map[string]interface{}{
 			"projects": res.Data,
+			"total":    res.Total,
 		},
 		Timestamp: time.Now().Unix(),
 	}, nil
