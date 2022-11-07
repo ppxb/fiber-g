@@ -1,5 +1,7 @@
 syntax = "v1"
 
+import "base.api"
+
 type (
     CreateAssetReq {
         Serial string `json:"serial"`
@@ -30,13 +32,9 @@ type (
         UUID string `json:"uuid"`
     }
 
-    ProjectReq {
+    Project {
         Name string `json:"name"`
         ParentProjectId string `json:"parentProjectId"`
-    }
-
-    ProjectResp {
-        UUID string `json:"uuid"`
     }
 )
 
@@ -53,5 +51,8 @@ service app {
     post /import returns (ImportAssetResp)
 
     @handler createProject
-    post /project/create (ProjectReq) returns (ProjectResp)
+    post /project/create (Project) returns (ResultWithData)
+
+    @handler projectList
+    post /project/list (PageInfoReq) returns (ResultWithData)
 }

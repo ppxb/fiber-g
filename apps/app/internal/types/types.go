@@ -5,6 +5,24 @@ type HealthResp struct {
 	Ping string `json:"ping"`
 }
 
+type PageInfoReq struct {
+	Page     int `json:"page"`
+	PageSize int `json:"pageSize"`
+}
+
+type ResultWithData struct {
+	Code      int32                  `json:"code"`
+	Msg       string                 `json:"msg"`
+	Data      map[string]interface{} `json:"data"`
+	Timestamp int64                  `json:"timestamp"`
+}
+
+type ResultWithMsg struct {
+	Code      int32  `json:"code"`
+	Msg       string `json:"msg"`
+	Timestamp int64  `json:"timestamp"`
+}
+
 type CreateDeptReq struct {
 	Name     string `json:"name"`
 	ParentId string `json:"parentId"`
@@ -58,11 +76,7 @@ type ImportAssetResp struct {
 	UUID string `json:"uuid"`
 }
 
-type ProjectReq struct {
+type Project struct {
 	Name            string `json:"name"`
 	ParentProjectId string `json:"parentProjectId"`
-}
-
-type ProjectResp struct {
-	UUID string `json:"uuid"`
 }

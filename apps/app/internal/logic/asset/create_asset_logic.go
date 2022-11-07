@@ -2,9 +2,10 @@ package asset
 
 import (
 	"context"
+	"fiber-g/apps/asset/asset"
+
 	"fiber-g/apps/app/internal/svc"
 	"fiber-g/apps/app/internal/types"
-	"fiber-g/apps/asset/asset"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )

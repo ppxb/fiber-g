@@ -1,15 +1,14 @@
 package main
 
 import (
+	"fiber-g/apps/asset/asset"
+	"fiber-g/apps/asset/internal/config"
 	"fiber-g/apps/asset/internal/model"
+	"fiber-g/apps/asset/internal/server"
+	"fiber-g/apps/asset/internal/svc"
 	"flag"
 	"fmt"
 	"github.com/zeromicro/go-zero/core/logx"
-
-	"fiber-g/apps/asset/asset"
-	"fiber-g/apps/asset/internal/config"
-	"fiber-g/apps/asset/internal/server"
-	"fiber-g/apps/asset/internal/svc"
 
 	"github.com/zeromicro/go-zero/core/conf"
 	"github.com/zeromicro/go-zero/core/service"
@@ -36,6 +35,7 @@ func main() {
 	})
 	defer s.Stop()
 
+	// gorm auto create migrate and create table
 	err := ctx.Db.AutoMigrate(
 		&model.Project{},
 	)

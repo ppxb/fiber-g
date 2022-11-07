@@ -2,23 +2,25 @@ package asset
 
 import (
 	"context"
-	"fiber-g/apps/app/internal/svc"
-	"fiber-g/apps/app/internal/types"
 	"fmt"
 	"github.com/google/uuid"
 	"github.com/xuri/excelize/v2"
-	"github.com/zeromicro/go-zero/core/logx"
 	"net/http"
 	"reflect"
+
+	"fiber-g/apps/app/internal/svc"
+	"fiber-g/apps/app/internal/types"
+
+	"github.com/zeromicro/go-zero/core/logx"
 )
 
 const maxFileSize = 10 << 20 // 10MB
 
 type ImportAssetLogic struct {
 	logx.Logger
-	r      *http.Request
 	ctx    context.Context
 	svcCtx *svc.ServiceContext
+	r      *http.Request
 }
 
 func NewImportAssetLogic(r *http.Request, svcCtx *svc.ServiceContext) *ImportAssetLogic {

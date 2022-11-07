@@ -1,0 +1,21 @@
+syntax = "v1"
+
+type (
+    PageInfoReq {
+        Page int `json:"page"`
+        PageSize int `json:"pageSize"`
+    }
+
+    ResultWithData {
+        Code int32 `json:"code"`
+        Msg string `json:"msg"`
+        Data map[string]interface{} `json:"data"`
+        Timestamp int64 `json:"timestamp"`
+    }
+
+    ResultWithMsg {
+        Code int32 `json:"code"`
+        Msg string `json:"msg"`
+        Timestamp int64 `json:"timestamp"`
+    }
+)

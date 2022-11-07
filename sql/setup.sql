@@ -43,7 +43,7 @@ CREATE TABLE `users`
 
 -- CREATE ASSET DATABASE
 DROP DATABASE IF EXISTS fiber_asset;
-CREATE DATABASE fiber_asset;
+CREATE DATABASE fiber_asset DEFAULT CHARSET utf8mb4 COLLATE utf8mb4_general_ci;
 USE fiber_asset;
 
 CREATE TABLE `assets`

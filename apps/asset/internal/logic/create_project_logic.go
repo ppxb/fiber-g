@@ -2,12 +2,13 @@ package logic
 
 import (
 	"context"
-	"fiber-g/apps/asset/internal/model"
-	"github.com/google/uuid"
-	"gorm.io/gorm"
-
 	"fiber-g/apps/asset/asset"
+	"fiber-g/apps/asset/internal/model"
 	"fiber-g/apps/asset/internal/svc"
+	"github.com/google/uuid"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
+	"gorm.io/gorm"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -37,7 +38,7 @@ func (l *CreateProjectLogic) CreateProject(in *asset.ProjectReq) (*asset.Project
 		}
 		err = l.svcCtx.Db.Create(data).Error
 		if err != nil {
-			return nil, err
+			return nil, status.Error(codes.Internal, "服务器内部故障")
 		}
 
 		return &asset.ProjectResp{
@@ -45,5 +46,5 @@ func (l *CreateProjectLogic) CreateProject(in *asset.ProjectReq) (*asset.Project
 		}, nil
 	}
 
-	return nil, err
+	return nil, status.Error(codes.AlreadyExists, "项目名已存在")
 }

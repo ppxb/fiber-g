@@ -38,7 +38,24 @@ message ProjectResp{
   string uuid = 1;
 }
 
+message ProjectListReq{
+  int64 page = 1;
+  int64 pageSize = 2;
+}
+
+message ProjectListResp{
+  uint64 total = 1;
+  repeated ProjectInfo data = 2;
+}
+
+message ProjectInfo{
+  string uuid = 1;
+  string name = 2;
+  string parentProjectId = 3;
+}
+
 service Asset{
   rpc CreateAsset(CreateAssetReq)returns(CreateAssetResp);
   rpc CreateProject(ProjectReq)returns(ProjectResp);
+  rpc GetProjectList(ProjectListReq)returns(ProjectListResp);
 }

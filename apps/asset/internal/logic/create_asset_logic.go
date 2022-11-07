@@ -5,7 +5,6 @@ import (
 	"database/sql"
 	"fiber-g/apps/asset/internal/model"
 	"github.com/google/uuid"
-	"google.golang.org/grpc/status"
 	"strconv"
 
 	"fiber-g/apps/asset/asset"
@@ -52,10 +51,10 @@ func (l *CreateAssetLogic) CreateAsset(in *asset.CreateAssetReq) (*asset.CreateA
 		SystemLoginUrl: in.SystemLoginUrl,
 	}
 
-	_, err := l.svcCtx.AssetModel.Insert(l.ctx, &newAsset)
-	if err != nil {
-		return nil, status.Error(500, err.Error())
-	}
+	//_, err := l.svcCtx.AssetModel.Insert(l.ctx, &newAsset)
+	//if err != nil {
+	//	return nil, status.Error(500, err.Error())
+	//}
 
 	return &asset.CreateAssetResp{
 		Uuid: newAsset.Id,

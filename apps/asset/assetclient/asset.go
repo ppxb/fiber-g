@@ -15,12 +15,16 @@ import (
 type (
 	CreateAssetReq  = asset.CreateAssetReq
 	CreateAssetResp = asset.CreateAssetResp
+	ProjectInfo     = asset.ProjectInfo
+	ProjectListReq  = asset.ProjectListReq
+	ProjectListResp = asset.ProjectListResp
 	ProjectReq      = asset.ProjectReq
 	ProjectResp     = asset.ProjectResp
 
 	Asset interface {
 		CreateAsset(ctx context.Context, in *CreateAssetReq, opts ...grpc.CallOption) (*CreateAssetResp, error)
 		CreateProject(ctx context.Context, in *ProjectReq, opts ...grpc.CallOption) (*ProjectResp, error)
+		GetProjectList(ctx context.Context, in *ProjectListReq, opts ...grpc.CallOption) (*ProjectListResp, error)
 	}
 
 	defaultAsset struct {
@@ -42,4 +46,9 @@ func (m *defaultAsset) CreateAsset(ctx context.Context, in *CreateAssetReq, opts
 func (m *defaultAsset) CreateProject(ctx context.Context, in *ProjectReq, opts ...grpc.CallOption) (*ProjectResp, error) {
 	client := asset.NewAssetClient(m.cli.Conn())
 	return client.CreateProject(ctx, in, opts...)
+}
+
+func (m *defaultAsset) GetProjectList(ctx context.Context, in *ProjectListReq, opts ...grpc.CallOption) (*ProjectListResp, error) {
+	client := asset.NewAssetClient(m.cli.Conn())
+	return client.GetProjectList(ctx, in, opts...)
 }

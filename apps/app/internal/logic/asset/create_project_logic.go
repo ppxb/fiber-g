@@ -3,6 +3,8 @@ package asset
 import (
 	"context"
 	"fiber-g/apps/asset/asset"
+	"fiber-g/pkg/errorx"
+	"time"
 
 	"fiber-g/apps/app/internal/svc"
 	"fiber-g/apps/app/internal/types"
@@ -24,14 +26,21 @@ func NewCreateProjectLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Cre
 	}
 }
 
-func (l *CreateProjectLogic) CreateProject(req *types.ProjectReq) (resp *types.ProjectResp, err error) {
+func (l *CreateProjectLogic) CreateProject(req *types.Project) (resp *types.ResultWithData, err error) {
 	res, err := l.svcCtx.AssetRpc.CreateProject(context.Background(), &asset.ProjectReq{
 		Name:            req.Name,
 		ParentProjectId: req.ParentProjectId,
 	})
 	if err != nil {
-		return nil, err
+		return nil, errorx.NewDefaultError(err.Error())
 	}
 
-	return &types.ProjectResp{UUID: res.Uuid}, nil
+	return &types.ResultWithData{
+		Code: errorx.OK,
+		Msg:  "项目创建成功",
+		Data: map[string]interface{}{
+			"uuid": res.Uuid,
+		},
+		Timestamp: time.Now().Unix(),
+	}, nil
 }

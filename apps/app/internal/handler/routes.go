@@ -64,6 +64,11 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Path:    "/project/create",
 				Handler: asset.CreateProjectHandler(serverCtx),
 			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/project/list",
+				Handler: asset.ProjectListHandler(serverCtx),
+			},
 		},
 		rest.WithPrefix("/api/v1/asset"),
 	)
