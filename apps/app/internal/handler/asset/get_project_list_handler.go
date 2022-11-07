@@ -9,7 +9,7 @@ import (
 	"github.com/zeromicro/go-zero/rest/httpx"
 )
 
-func ProjectListHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
+func GetProjectListHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var req types.PageInfoReq
 		if err := httpx.Parse(r, &req); err != nil {
@@ -17,8 +17,8 @@ func ProjectListHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 			return
 		}
 
-		l := asset.NewProjectListLogic(r.Context(), svcCtx)
-		resp, err := l.ProjectList(&req)
+		l := asset.NewGetProjectListLogic(r.Context(), svcCtx)
+		resp, err := l.GetProjectList(&req)
 		if err != nil {
 			httpx.Error(w, err)
 		} else {

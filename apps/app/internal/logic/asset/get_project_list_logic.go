@@ -12,21 +12,21 @@ import (
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
-type ProjectListLogic struct {
+type GetProjectListLogic struct {
 	logx.Logger
 	ctx    context.Context
 	svcCtx *svc.ServiceContext
 }
 
-func NewProjectListLogic(ctx context.Context, svcCtx *svc.ServiceContext) *ProjectListLogic {
-	return &ProjectListLogic{
+func NewGetProjectListLogic(ctx context.Context, svcCtx *svc.ServiceContext) *GetProjectListLogic {
+	return &GetProjectListLogic{
 		Logger: logx.WithContext(ctx),
 		ctx:    ctx,
 		svcCtx: svcCtx,
 	}
 }
 
-func (l *ProjectListLogic) ProjectList(req *types.PageInfoReq) (resp *types.ResultWithData, err error) {
+func (l *GetProjectListLogic) GetProjectList(req *types.PageInfoReq) (resp *types.ResultWithData, err error) {
 	if req.Page < 0 || req.PageSize < 0 {
 		return nil, errorx.NewDefaultError("pageSize 或 page 不能小于0")
 	}

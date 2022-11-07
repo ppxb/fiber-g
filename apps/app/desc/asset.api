@@ -53,6 +53,6 @@ service app {
     @handler createProject
     post /project/create (Project) returns (ResultWithData)
 
-    @handler projectList
+    @handler getProjectList
     post /project/list (PageInfoReq) returns (ResultWithData)
 }
