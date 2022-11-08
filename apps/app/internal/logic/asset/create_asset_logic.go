@@ -24,7 +24,7 @@ func NewCreateAssetLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Creat
 	}
 }
 
-func (l *CreateAssetLogic) CreateAsset(req *types.CreateAssetReq) (resp *types.CreateAssetResp, err error) {
+func (l *CreateAssetLogic) CreateAsset(req *types.Asset) (resp *types.CreateAssetResp, err error) {
 	res, err := l.svcCtx.AssetRpc.CreateAsset(l.ctx, &asset.CreateAssetReq{
 		Name:           req.Name,
 		Serial:         req.Serial,
@@ -34,7 +34,6 @@ func (l *CreateAssetLogic) CreateAsset(req *types.CreateAssetReq) (resp *types.C
 		Type:           req.Type,
 		SubDistrict:    req.SubDistrict,
 		Brand:          req.Brand,
-		Model:          req.Model,
 		Unit:           req.Unit,
 		Params:         req.Params,
 		Value:          req.Value,

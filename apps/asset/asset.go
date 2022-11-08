@@ -37,6 +37,7 @@ func main() {
 
 	// gorm auto create migrate and create table
 	err := ctx.Db.AutoMigrate(
+		&model.Asset{},
 		&model.Project{},
 	)
 	if err != nil {

@@ -52,10 +52,46 @@ message ProjectInfo{
   string uuid = 1;
   string name = 2;
   string parentProjectId = 3;
+  string createdAt = 4;
+}
+
+message UploadReq{
+
+}
+
+message UploadAssetInfo{
+  string projectName = 1;
+  string sonProjectName = 2;
+  string partProjectName = 3;
+  string serial = 4 ;
+  string name = 5;
+  string type = 6;
+  string kind = 7;
+  string subDistrict = 8;
+  string  brand = 9;
+  string specs = 10;
+  string unit = 11;
+  string params = 12;
+  string value = 13;
+  string address = 14;
+  string long = 15;
+  string lat = 16;
+  string imgUrl = 17;
+  string systemLoginUrl = 18;
+  string systemLoginPwd = 19;
+  string iotNetSerial = 20;
+  string netStatus = 21;
+  string emeterSerial = 22;
+  string emeterStatus = 23;
+}
+
+message UploadResp{
+
 }
 
 service Asset{
   rpc CreateAsset(CreateAssetReq)returns(CreateAssetResp);
   rpc CreateProject(ProjectReq)returns(ProjectResp);
   rpc GetProjectList(ProjectListReq)returns(ProjectListResp);
+  rpc ImportAssets(UploadReq)returns(UploadResp);
 }

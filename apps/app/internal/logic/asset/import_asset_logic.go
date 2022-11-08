@@ -2,8 +2,8 @@ package asset
 
 import (
 	"context"
+	"fiber-g/pkg/errorx"
 	"fmt"
-	"github.com/google/uuid"
 	"github.com/xuri/excelize/v2"
 	"net/http"
 	"reflect"
@@ -33,28 +33,35 @@ func NewImportAssetLogic(r *http.Request, svcCtx *svc.ServiceContext) *ImportAss
 }
 
 func (l *ImportAssetLogic) ImportAsset() (resp *types.ImportAssetResp, err error) {
-	l.r.ParseMultipartForm(maxFileSize)
+	// file size bigger than defined
+	err = l.r.ParseMultipartForm(maxFileSize)
+	if err != nil {
+		return nil, errorx.NewDefaultError("文件过大，上传文件请小于20M")
+	}
+
 	file, handler, err := l.r.FormFile("file")
 	if err != nil {
-		return nil, err
+		return nil, errorx.NewDefaultError("文件读取失败，请稍后再试")
 	}
-	defer file.Close()
+	defer func() {
+		if err := file.Close(); err != nil {
+			fmt.Println(err.Error())
+		}
+	}()
 
 	logx.Infof("upload file: %+v, file size: %d, MIME header: %+v",
 		handler.Filename, handler.Size, handler.Header)
 
 	f, err := excelize.OpenReader(file)
 	if err != nil {
-		logx.Error("open file error")
+		logx.Error("open excel file error")
 	}
 
-	var list []types.CreateAssetReq
-	var asset types.CreateAssetReq
+	var asset types.UploadAsset
+	var assetList []types.UploadAsset
 
 	rows, err := f.GetRows("Sheet1")
-
 	values := reflect.ValueOf(&asset).Elem()
-
 	for i, r := range rows {
 		if i < 1 {
 			continue
@@ -62,10 +69,12 @@ func (l *ImportAssetLogic) ImportAsset() (resp *types.ImportAssetResp, err error
 		for j, v := range r {
 			values.Field(j).SetString(v)
 		}
-		list = append(list, asset)
-		fmt.Printf("%+v", list)
+		assetList = append(assetList, asset)
 	}
-	//入库将value改为float64
 
-	return &types.ImportAssetResp{UUID: uuid.NewString()}, nil
+	fmt.Printf("%+v", assetList)
+	return &types.ImportAssetResp{
+		Success: 50,
+		Fail:    0,
+	}, nil
 }
