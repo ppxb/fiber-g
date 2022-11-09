@@ -41,3 +41,9 @@ func (s *AssetServer) ImportAssets(ctx context.Context, in *asset.UploadReq) (*a
 	l := logic.NewImportAssetsLogic(ctx, s.svcCtx)
 	return l.ImportAssets(in)
 }
+
+// get common assets list
+func (s *AssetServer) GetAssetList(ctx context.Context, in *asset.PageReq) (*asset.AssetListResp, error) {
+	l := logic.NewGetAssetListLogic(ctx, s.svcCtx)
+	return l.GetAssetList(in)
+}

@@ -3,56 +3,59 @@ syntax = "v1"
 import "base.api"
 
 type (
-	Asset {
-		ProjectId       string  `json:"projectId"`
-		SonProjectId    string  `json:"sonProjectId"`
-		PartProjectId   string  `json:"partProjectId"`
-		ProjectName     string  `json:"projectName"`
-		SonProjectName  string  `json:"sonProjectName"`
-		PartProjectName string  `json:"partProjectName"`
-		Serial          string  `json:"serial"`
-		Name            string  `json:"name"`
-		Type            string  `json:"type"`
-		Kind            string  `json:"kind"`
-		SubDistrict     string  `json:"subDistrict"`
-		Brand           string  `json:"brand"`
-		Specs           string  `json:"specs"`
-		Unit            string  `json:"unit"`
-		Params          string  `json:"params"`
-		Value           float64 `json:"value"`
-		Address         string  `json:"address"`
-		Long            string  `json:"long"`
-		Lat             string  `json:"lat"`
-		ImgUrl          string  `json:"imgUrl"`
-		SystemLoginUrl  string  `json:"systemLoginUrl"`
-		SystemLoginPwd  string  `json:"systemLoginPwd"`
-		IotNetSerial    string  `json:"iotNetSerial"`
-		NetStatus       string  `json:"netStatus"`
-		EmeterSerial    string  `json:"emeterSerial"`
-		EmeterStatus    string  `json:"emeterStatus"`
-	}
+    Asset {
+        ProjectId string `json:"projectId"`
+        SonProjectId string `json:"sonProjectId"`
+        PartProjectId string `json:"partProjectId"`
+        ProjectName string `json:"projectName"`
+        SonProjectName string `json:"sonProjectName"`
+        PartProjectName string `json:"partProjectName"`
+        Serial string `json:"serial"`
+        Name string `json:"name"`
+        Type string `json:"type"`
+        Kind string `json:"kind"`
+        SubDistrict string `json:"subDistrict"`
+        Brand string `json:"brand"`
+        Specs string `json:"specs"`
+        Unit string `json:"unit"`
+        Params string `json:"params"`
+        Value float64 `json:"value"`
+        Address string `json:"address"`
+        Long string `json:"long"`
+        Lat string `json:"lat"`
+        ImgUrl string `json:"imgUrl"`
+        SystemLoginUrl string `json:"systemLoginUrl"`
+        SystemLoginPwd string `json:"systemLoginPwd"`
+        IotNetSerial string `json:"iotNetSerial"`
+        NetStatus string `json:"netStatus"`
+        EmeterSerial string `json:"emeterSerial"`
+        EmeterStatus string `json:"emeterStatus"`
+    }
 
-	Project {
-		Name            string `json:"name"`
-		ParentProjectId string `json:"parentProjectId"`
-	}
+    Project {
+        Name string `json:"name"`
+        ParentProjectId string `json:"parentProjectId"`
+    }
 )
 
 @server(
-	group : asset
-	prefix :api/v1/asset
+    group : asset
+    prefix :api/v1/asset
 )
 
 service app {
-	@handler createAsset
-	post /create (Asset) returns (ResultWithData)
+    @handler createAsset
+    post /create (Asset) returns (ResultWithData)
+
+    @handler importAsset
+    post /import returns (ResultWithData)
+
+    @handler createProject
+    post /project/create (Project) returns (ResultWithData)
+
+    @handler getProjectList
+    post /project/list (PageInfoReq) returns (ResultWithData)
 	
-	@handler importAsset
-	post /import returns (ResultWithData)
-	
-	@handler createProject
-	post /project/create (Project) returns (ResultWithData)
-	
-	@handler getProjectList
-	post /project/list (PageInfoReq) returns (ResultWithData)
+    @handler getAssetList
+    post /list (PageInfoReq) returns (ResultWithData)
 }

@@ -2,7 +2,6 @@ package logic
 
 import (
 	"context"
-	"fmt"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 
@@ -32,8 +31,7 @@ func (l *GetProjectListLogic) GetProjectList(in *asset.ProjectListReq) (*asset.P
 
 	err := l.svcCtx.Db.Table("projects").Count(&total).Offset(int(in.Page * in.PageSize)).Limit(int(in.PageSize)).Find(&projects).Error
 	if err != nil {
-		fmt.Println(err.Error())
-		return nil, status.Error(codes.Internal, "服务器内部故障")
+		return nil, status.Error(codes.Internal, "服务器内部错误")
 	}
 
 	return &asset.ProjectListResp{

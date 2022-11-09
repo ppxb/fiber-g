@@ -3,6 +3,8 @@ package asset
 import (
 	"context"
 	"fiber-g/apps/asset/asset"
+	"fiber-g/pkg/errorx"
+	"time"
 
 	"fiber-g/apps/app/internal/svc"
 	"fiber-g/apps/app/internal/types"
@@ -24,7 +26,7 @@ func NewCreateAssetLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Creat
 	}
 }
 
-func (l *CreateAssetLogic) CreateAsset(req *types.Asset) (resp *types.CreateAssetResp, err error) {
+func (l *CreateAssetLogic) CreateAsset(req *types.Asset) (resp *types.ResultWithData, err error) {
 	res, err := l.svcCtx.AssetRpc.CreateAsset(l.ctx, &asset.CreateAssetReq{
 		Name:           req.Name,
 		Serial:         req.Serial,
@@ -36,7 +38,7 @@ func (l *CreateAssetLogic) CreateAsset(req *types.Asset) (resp *types.CreateAsse
 		Brand:          req.Brand,
 		Unit:           req.Unit,
 		Params:         req.Params,
-		Value:          req.Value,
+		Value:          "0",
 		Address:        req.Address,
 		Long:           req.Long,
 		Lat:            req.Lat,
@@ -48,5 +50,12 @@ func (l *CreateAssetLogic) CreateAsset(req *types.Asset) (resp *types.CreateAsse
 		return nil, err
 	}
 
-	return &types.CreateAssetResp{UUID: res.Uuid}, nil
+	return &types.ResultWithData{
+		Code: errorx.OK,
+		Msg:  "项目创建成功",
+		Data: map[string]interface{}{
+			"uuid": res.Uuid,
+		},
+		Timestamp: time.Now().Unix(),
+	}, nil
 }

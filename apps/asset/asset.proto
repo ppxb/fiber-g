@@ -64,9 +64,54 @@ message UploadResp{
   int64 fail = 2;
 }
 
+message PageReq{
+  int64 page = 1;
+  int64 pageSize = 2;
+}
+
+message AssetInfo{
+  string createdAt = 1;
+  string updatedAt = 2;
+  string uuid = 3;
+  string projectId = 4;
+  string sonProjectId = 5;
+  string partProjectId = 6;
+  string projectName = 7;
+  string sonProjectName = 8;
+  string partProjectName = 9;
+  string serial = 10;
+  string name = 11;
+  string type = 12;
+  string kind = 13;
+  string subDistrict = 14;
+  string brand = 15;
+  string specs = 16;
+  string unit = 17;
+  string params = 18;
+  double value = 19;
+  string address = 20;
+  string long = 21;
+  string lat = 22;
+  string imgUrl = 23;
+  string systemLoginUrl = 24;
+  string systemLoginPwd = 25;
+  string iotNetSerial = 26;
+  string netStatus = 27;
+  string emeterSerial = 28;
+  string emeterStatus = 29;
+}
+
+message AssetListResp{
+  int64 total = 1;
+  repeated AssetInfo data = 2;
+}
+
 service Asset{
   rpc CreateAsset(CreateAssetReq)returns(CreateAssetResp);
   rpc CreateProject(ProjectReq)returns(ProjectResp);
   rpc GetProjectList(ProjectListReq)returns(ProjectListResp);
   rpc ImportAssets(UploadReq)returns(UploadResp);
+
+  //  get common assets list
+  rpc GetAssetList(PageReq)returns(AssetListResp);
 }

@@ -12,26 +12,26 @@ import (
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
-type GetProjectListLogic struct {
+type GetAssetListLogic struct {
 	logx.Logger
 	ctx    context.Context
 	svcCtx *svc.ServiceContext
 }
 
-func NewGetProjectListLogic(ctx context.Context, svcCtx *svc.ServiceContext) *GetProjectListLogic {
-	return &GetProjectListLogic{
+func NewGetAssetListLogic(ctx context.Context, svcCtx *svc.ServiceContext) *GetAssetListLogic {
+	return &GetAssetListLogic{
 		Logger: logx.WithContext(ctx),
 		ctx:    ctx,
 		svcCtx: svcCtx,
 	}
 }
 
-func (l *GetProjectListLogic) GetProjectList(req *types.PageInfoReq) (resp *types.ResultWithData, err error) {
+func (l *GetAssetListLogic) GetAssetList(req *types.PageInfoReq) (resp *types.ResultWithData, err error) {
 	if req.Page < 0 || req.PageSize < 0 || req.PageSize > 50 {
 		return nil, errorx.NewDefaultError("page 或 pageSize 超过了允许的值")
 	}
 
-	res, err := l.svcCtx.AssetRpc.GetProjectList(context.Background(), &asset.ProjectListReq{
+	res, err := l.svcCtx.AssetRpc.GetAssetList(context.Background(), &asset.PageReq{
 		Page:     int64(req.Page),
 		PageSize: int64(req.PageSize),
 	})
@@ -43,8 +43,8 @@ func (l *GetProjectListLogic) GetProjectList(req *types.PageInfoReq) (resp *type
 		Code: errorx.OK,
 		Msg:  "请求成功",
 		Data: map[string]interface{}{
-			"projects": res.Data,
-			"total":    res.Total,
+			"assets": res.Data,
+			"total":  res.Total,
 		},
 		Timestamp: time.Now().Unix(),
 	}, nil
