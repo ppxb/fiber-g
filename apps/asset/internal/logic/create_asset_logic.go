@@ -2,7 +2,6 @@ package logic
 
 import (
 	"context"
-	"database/sql"
 	"fiber-g/apps/asset/internal/model"
 	"github.com/google/uuid"
 	"strconv"
@@ -29,8 +28,8 @@ func NewCreateAssetLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Creat
 
 func (l *CreateAssetLogic) CreateAsset(in *asset.CreateAssetReq) (*asset.CreateAssetResp, error) {
 	v, _ := strconv.ParseFloat(in.Value, 64)
-	newAsset := model.Assets{
-		Id:             uuid.NewString(),
+	newAsset := model.Asset{
+		UUID:           uuid.NewString(),
 		Name:           in.Name,
 		Serial:         in.Serial,
 		ProjectId:      in.ProjectId,
@@ -39,9 +38,9 @@ func (l *CreateAssetLogic) CreateAsset(in *asset.CreateAssetReq) (*asset.CreateA
 		Type:           in.Type,
 		SubDistrict:    in.SubDistrict,
 		Brand:          in.Brand,
-		Model:          in.Model,
+		Kind:           in.Model,
 		Unit:           in.Unit,
-		Params:         sql.NullString{String: in.Params},
+		Params:         in.Params,
 		Value:          v,
 		Address:        in.Address,
 		Long:           in.Long,
@@ -57,6 +56,6 @@ func (l *CreateAssetLogic) CreateAsset(in *asset.CreateAssetReq) (*asset.CreateA
 	//}
 
 	return &asset.CreateAssetResp{
-		Uuid: newAsset.Id,
+		Uuid: newAsset.UUID,
 	}, nil
 }
