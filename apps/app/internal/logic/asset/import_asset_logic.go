@@ -1,15 +1,16 @@
 package asset
 
 import (
+	"bytes"
 	"context"
-	"fiber-g/pkg/errorx"
-	"fmt"
-	"github.com/xuri/excelize/v2"
-	"net/http"
-	"reflect"
-
 	"fiber-g/apps/app/internal/svc"
 	"fiber-g/apps/app/internal/types"
+	"fiber-g/apps/asset/asset"
+	"fiber-g/pkg/errorx"
+	"fmt"
+	"io"
+	"net/http"
+	"time"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -32,7 +33,7 @@ func NewImportAssetLogic(r *http.Request, svcCtx *svc.ServiceContext) *ImportAss
 	}
 }
 
-func (l *ImportAssetLogic) ImportAsset() (resp *types.ImportAssetResp, err error) {
+func (l *ImportAssetLogic) ImportAsset() (resp *types.ResultWithData, err error) {
 	// file size bigger than defined
 	err = l.r.ParseMultipartForm(maxFileSize)
 	if err != nil {
@@ -43,6 +44,12 @@ func (l *ImportAssetLogic) ImportAsset() (resp *types.ImportAssetResp, err error
 	if err != nil {
 		return nil, errorx.NewDefaultError("文件读取失败，请稍后再试")
 	}
+
+	buff := new(bytes.Buffer)
+	if _, err := io.Copy(buff, file); err != nil {
+		return nil, errorx.NewDefaultError("文件解析失败，请稍后再试")
+	}
+
 	defer func() {
 		if err := file.Close(); err != nil {
 			fmt.Println(err.Error())
@@ -52,29 +59,20 @@ func (l *ImportAssetLogic) ImportAsset() (resp *types.ImportAssetResp, err error
 	logx.Infof("upload file: %+v, file size: %d, MIME header: %+v",
 		handler.Filename, handler.Size, handler.Header)
 
-	f, err := excelize.OpenReader(file)
+	res, err := l.svcCtx.AssetRpc.ImportAssets(context.Background(), &asset.UploadReq{
+		File: buff.Bytes(),
+	})
 	if err != nil {
-		logx.Error("open excel file error")
+		return nil, errorx.NewDefaultError(err.Error())
 	}
 
-	var asset types.UploadAsset
-	var assetList []types.UploadAsset
-
-	rows, err := f.GetRows("Sheet1")
-	values := reflect.ValueOf(&asset).Elem()
-	for i, r := range rows {
-		if i < 1 {
-			continue
-		}
-		for j, v := range r {
-			values.Field(j).SetString(v)
-		}
-		assetList = append(assetList, asset)
-	}
-
-	fmt.Printf("%+v", assetList)
-	return &types.ImportAssetResp{
-		Success: 50,
-		Fail:    0,
+	return &types.ResultWithData{
+		Code: errorx.OK,
+		Msg:  "请求成功",
+		Data: map[string]interface{}{
+			"success": res.Success,
+			"fail":    res.Fail,
+		},
+		Timestamp: time.Now().Unix(),
 	}, nil
 }

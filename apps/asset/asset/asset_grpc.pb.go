@@ -25,6 +25,7 @@ type AssetClient interface {
 	CreateAsset(ctx context.Context, in *CreateAssetReq, opts ...grpc.CallOption) (*CreateAssetResp, error)
 	CreateProject(ctx context.Context, in *ProjectReq, opts ...grpc.CallOption) (*ProjectResp, error)
 	GetProjectList(ctx context.Context, in *ProjectListReq, opts ...grpc.CallOption) (*ProjectListResp, error)
+	ImportAssets(ctx context.Context, in *UploadReq, opts ...grpc.CallOption) (*UploadResp, error)
 }
 
 type assetClient struct {
@@ -62,6 +63,15 @@ func (c *assetClient) GetProjectList(ctx context.Context, in *ProjectListReq, op
 	return out, nil
 }
 
+func (c *assetClient) ImportAssets(ctx context.Context, in *UploadReq, opts ...grpc.CallOption) (*UploadResp, error) {
+	out := new(UploadResp)
+	err := c.cc.Invoke(ctx, "/asset.Asset/ImportAssets", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AssetServer is the server API for Asset service.
 // All implementations must embed UnimplementedAssetServer
 // for forward compatibility
@@ -69,6 +79,7 @@ type AssetServer interface {
 	CreateAsset(context.Context, *CreateAssetReq) (*CreateAssetResp, error)
 	CreateProject(context.Context, *ProjectReq) (*ProjectResp, error)
 	GetProjectList(context.Context, *ProjectListReq) (*ProjectListResp, error)
+	ImportAssets(context.Context, *UploadReq) (*UploadResp, error)
 	mustEmbedUnimplementedAssetServer()
 }
 
@@ -84,6 +95,9 @@ func (UnimplementedAssetServer) CreateProject(context.Context, *ProjectReq) (*Pr
 }
 func (UnimplementedAssetServer) GetProjectList(context.Context, *ProjectListReq) (*ProjectListResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetProjectList not implemented")
+}
+func (UnimplementedAssetServer) ImportAssets(context.Context, *UploadReq) (*UploadResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ImportAssets not implemented")
 }
 func (UnimplementedAssetServer) mustEmbedUnimplementedAssetServer() {}
 
@@ -152,6 +166,24 @@ func _Asset_GetProjectList_Handler(srv interface{}, ctx context.Context, dec fun
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Asset_ImportAssets_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UploadReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AssetServer).ImportAssets(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/asset.Asset/ImportAssets",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AssetServer).ImportAssets(ctx, req.(*UploadReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Asset_ServiceDesc is the grpc.ServiceDesc for Asset service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -170,6 +202,10 @@ var Asset_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetProjectList",
 			Handler:    _Asset_GetProjectList_Handler,
+		},
+		{
+			MethodName: "ImportAssets",
+			Handler:    _Asset_ImportAssets_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

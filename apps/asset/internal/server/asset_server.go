@@ -36,3 +36,8 @@ func (s *AssetServer) GetProjectList(ctx context.Context, in *asset.ProjectListR
 	l := logic.NewGetProjectListLogic(ctx, s.svcCtx)
 	return l.GetProjectList(in)
 }
+
+func (s *AssetServer) ImportAssets(ctx context.Context, in *asset.UploadReq) (*asset.UploadResp, error) {
+	l := logic.NewImportAssetsLogic(ctx, s.svcCtx)
+	return l.ImportAssets(in)
+}

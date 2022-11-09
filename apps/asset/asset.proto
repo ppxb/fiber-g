@@ -56,37 +56,12 @@ message ProjectInfo{
 }
 
 message UploadReq{
-
-}
-
-message UploadAssetInfo{
-  string projectName = 1;
-  string sonProjectName = 2;
-  string partProjectName = 3;
-  string serial = 4 ;
-  string name = 5;
-  string type = 6;
-  string kind = 7;
-  string subDistrict = 8;
-  string  brand = 9;
-  string specs = 10;
-  string unit = 11;
-  string params = 12;
-  string value = 13;
-  string address = 14;
-  string long = 15;
-  string lat = 16;
-  string imgUrl = 17;
-  string systemLoginUrl = 18;
-  string systemLoginPwd = 19;
-  string iotNetSerial = 20;
-  string netStatus = 21;
-  string emeterSerial = 22;
-  string emeterStatus = 23;
+  bytes file = 1;
 }
 
 message UploadResp{
-
+  int64 success = 1;
+  int64 fail = 2;
 }
 
 service Asset{

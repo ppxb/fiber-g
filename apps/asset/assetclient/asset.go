@@ -20,11 +20,14 @@ type (
 	ProjectListResp = asset.ProjectListResp
 	ProjectReq      = asset.ProjectReq
 	ProjectResp     = asset.ProjectResp
+	UploadReq       = asset.UploadReq
+	UploadResp      = asset.UploadResp
 
 	Asset interface {
 		CreateAsset(ctx context.Context, in *CreateAssetReq, opts ...grpc.CallOption) (*CreateAssetResp, error)
 		CreateProject(ctx context.Context, in *ProjectReq, opts ...grpc.CallOption) (*ProjectResp, error)
 		GetProjectList(ctx context.Context, in *ProjectListReq, opts ...grpc.CallOption) (*ProjectListResp, error)
+		ImportAssets(ctx context.Context, in *UploadReq, opts ...grpc.CallOption) (*UploadResp, error)
 	}
 
 	defaultAsset struct {
@@ -51,4 +54,9 @@ func (m *defaultAsset) CreateProject(ctx context.Context, in *ProjectReq, opts .
 func (m *defaultAsset) GetProjectList(ctx context.Context, in *ProjectListReq, opts ...grpc.CallOption) (*ProjectListResp, error) {
 	client := asset.NewAssetClient(m.cli.Conn())
 	return client.GetProjectList(ctx, in, opts...)
+}
+
+func (m *defaultAsset) ImportAssets(ctx context.Context, in *UploadReq, opts ...grpc.CallOption) (*UploadResp, error) {
+	client := asset.NewAssetClient(m.cli.Conn())
+	return client.ImportAssets(ctx, in, opts...)
 }
