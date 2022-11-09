@@ -23,11 +23,14 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type AssetClient interface {
 	CreateAsset(ctx context.Context, in *CreateAssetReq, opts ...grpc.CallOption) (*CreateAssetResp, error)
+	// create project
 	CreateProject(ctx context.Context, in *ProjectReq, opts ...grpc.CallOption) (*ProjectResp, error)
 	GetProjectList(ctx context.Context, in *ProjectListReq, opts ...grpc.CallOption) (*ProjectListResp, error)
 	ImportAssets(ctx context.Context, in *UploadReq, opts ...grpc.CallOption) (*UploadResp, error)
 	// get common assets list
 	GetAssetList(ctx context.Context, in *PageReq, opts ...grpc.CallOption) (*AssetListResp, error)
+	// get filtered assets list
+	GetFilterAssetList(ctx context.Context, in *ProjectFilterReq, opts ...grpc.CallOption) (*AssetListResp, error)
 }
 
 type assetClient struct {
@@ -83,16 +86,28 @@ func (c *assetClient) GetAssetList(ctx context.Context, in *PageReq, opts ...grp
 	return out, nil
 }
 
+func (c *assetClient) GetFilterAssetList(ctx context.Context, in *ProjectFilterReq, opts ...grpc.CallOption) (*AssetListResp, error) {
+	out := new(AssetListResp)
+	err := c.cc.Invoke(ctx, "/asset.Asset/GetFilterAssetList", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AssetServer is the server API for Asset service.
 // All implementations must embed UnimplementedAssetServer
 // for forward compatibility
 type AssetServer interface {
 	CreateAsset(context.Context, *CreateAssetReq) (*CreateAssetResp, error)
+	// create project
 	CreateProject(context.Context, *ProjectReq) (*ProjectResp, error)
 	GetProjectList(context.Context, *ProjectListReq) (*ProjectListResp, error)
 	ImportAssets(context.Context, *UploadReq) (*UploadResp, error)
 	// get common assets list
 	GetAssetList(context.Context, *PageReq) (*AssetListResp, error)
+	// get filtered assets list
+	GetFilterAssetList(context.Context, *ProjectFilterReq) (*AssetListResp, error)
 	mustEmbedUnimplementedAssetServer()
 }
 
@@ -114,6 +129,9 @@ func (UnimplementedAssetServer) ImportAssets(context.Context, *UploadReq) (*Uplo
 }
 func (UnimplementedAssetServer) GetAssetList(context.Context, *PageReq) (*AssetListResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAssetList not implemented")
+}
+func (UnimplementedAssetServer) GetFilterAssetList(context.Context, *ProjectFilterReq) (*AssetListResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetFilterAssetList not implemented")
 }
 func (UnimplementedAssetServer) mustEmbedUnimplementedAssetServer() {}
 
@@ -218,6 +236,24 @@ func _Asset_GetAssetList_Handler(srv interface{}, ctx context.Context, dec func(
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Asset_GetFilterAssetList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ProjectFilterReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AssetServer).GetFilterAssetList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/asset.Asset/GetFilterAssetList",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AssetServer).GetFilterAssetList(ctx, req.(*ProjectFilterReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Asset_ServiceDesc is the grpc.ServiceDesc for Asset service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -244,6 +280,10 @@ var Asset_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetAssetList",
 			Handler:    _Asset_GetAssetList_Handler,
+		},
+		{
+			MethodName: "GetFilterAssetList",
+			Handler:    _Asset_GetFilterAssetList_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

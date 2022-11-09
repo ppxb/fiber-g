@@ -35,6 +35,7 @@ func (l *CreateProjectLogic) CreateProject(in *asset.ProjectReq) (*asset.Project
 			UUID:            uuid.NewString(),
 			Name:            in.Name,
 			ParentProjectId: in.ParentProjectId,
+			Level:           in.Level,
 		}
 		err = l.svcCtx.Db.Create(data).Error
 		if err != nil {
@@ -46,5 +47,5 @@ func (l *CreateProjectLogic) CreateProject(in *asset.ProjectReq) (*asset.Project
 		}, nil
 	}
 
-	return nil, status.Error(codes.AlreadyExists, "项目名已存在")
+	return nil, status.Error(codes.AlreadyExists, "项目已存在")
 }

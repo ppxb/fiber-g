@@ -30,6 +30,7 @@ func (l *CreateProjectLogic) CreateProject(req *types.Project) (resp *types.Resu
 	res, err := l.svcCtx.AssetRpc.CreateProject(context.Background(), &asset.ProjectReq{
 		Name:            req.Name,
 		ParentProjectId: req.ParentProjectId,
+		Level:           req.Level,
 	})
 	if err != nil {
 		return nil, errorx.NewDefaultError(err.Error())

@@ -30,7 +30,9 @@ func (l *GetAssetListLogic) GetAssetList(in *asset.PageReq) (*asset.AssetListRes
 	var assets []*asset.AssetInfo
 	var total int64
 
-	err := l.svcCtx.Db.Table("assets").Count(&total).Offset(int(in.Page * in.PageSize)).Limit(int(in.PageSize)).Find(&assets).Error
+	db := l.svcCtx.Db.Table("assets")
+	db.Count(&total)
+	err := db.Offset(int(in.Page * in.PageSize)).Limit(int(in.PageSize)).Find(&assets).Error
 	if err != nil {
 		return nil, status.Error(codes.Internal, "服务器内部错误")
 	}

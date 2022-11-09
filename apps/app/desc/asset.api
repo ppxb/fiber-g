@@ -35,6 +35,17 @@ type (
     Project {
         Name string `json:"name"`
         ParentProjectId string `json:"parentProjectId"`
+        Level int64 `json:"level"`
+    }
+
+    FilterAssetListReq {
+        Page int64 `json:"page"`
+        PageSize int64 `json:"pageSize"`
+        Query
+    }
+
+    Query {
+        UUID string `json:"uuid"`
     }
 )
 
@@ -55,7 +66,10 @@ service app {
 
     @handler getProjectList
     post /project/list (PageInfoReq) returns (ResultWithData)
-	
+
     @handler getAssetList
     post /list (PageInfoReq) returns (ResultWithData)
+
+    @handler getFilterAssetList
+    post /flist (FilterAssetListReq) returns (ResultWithData)
 }

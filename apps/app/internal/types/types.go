@@ -79,4 +79,15 @@ type Asset struct {
 type Project struct {
 	Name            string `json:"name"`
 	ParentProjectId string `json:"parentProjectId"`
+	Level           int64  `json:"level"`
+}
+
+type FilterAssetListReq struct {
+	Page     int64 `json:"page"`
+	PageSize int64 `json:"pageSize"`
+	Query
+}
+
+type Query struct {
+	UUID string `json:"uuid"`
 }

@@ -74,6 +74,11 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Path:    "/list",
 				Handler: asset.GetAssetListHandler(serverCtx),
 			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/flist",
+				Handler: asset.GetFilterAssetListHandler(serverCtx),
+			},
 		},
 		rest.WithPrefix("/api/v1/asset"),
 	)

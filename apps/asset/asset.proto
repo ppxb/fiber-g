@@ -32,6 +32,7 @@ message CreateAssetResp{
 message ProjectReq{
   string Name = 1;
   string ParentProjectId = 2;
+  int64 Level = 3;
 }
 
 message ProjectResp{
@@ -106,12 +107,21 @@ message AssetListResp{
   repeated AssetInfo data = 2;
 }
 
+message ProjectFilterReq{
+  int64 page = 1;
+  int64 pageSize = 2;
+  string uuid = 3;
+}
+
 service Asset{
   rpc CreateAsset(CreateAssetReq)returns(CreateAssetResp);
+  // create project
   rpc CreateProject(ProjectReq)returns(ProjectResp);
   rpc GetProjectList(ProjectListReq)returns(ProjectListResp);
   rpc ImportAssets(UploadReq)returns(UploadResp);
 
   //  get common assets list
   rpc GetAssetList(PageReq)returns(AssetListResp);
+  // get filtered assets list
+  rpc GetFilterAssetList(ProjectFilterReq)returns(AssetListResp);
 }

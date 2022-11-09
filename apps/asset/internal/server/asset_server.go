@@ -27,6 +27,7 @@ func (s *AssetServer) CreateAsset(ctx context.Context, in *asset.CreateAssetReq)
 	return l.CreateAsset(in)
 }
 
+// create project
 func (s *AssetServer) CreateProject(ctx context.Context, in *asset.ProjectReq) (*asset.ProjectResp, error) {
 	l := logic.NewCreateProjectLogic(ctx, s.svcCtx)
 	return l.CreateProject(in)
@@ -46,4 +47,10 @@ func (s *AssetServer) ImportAssets(ctx context.Context, in *asset.UploadReq) (*a
 func (s *AssetServer) GetAssetList(ctx context.Context, in *asset.PageReq) (*asset.AssetListResp, error) {
 	l := logic.NewGetAssetListLogic(ctx, s.svcCtx)
 	return l.GetAssetList(in)
+}
+
+// get filtered assets list
+func (s *AssetServer) GetFilterAssetList(ctx context.Context, in *asset.ProjectFilterReq) (*asset.AssetListResp, error) {
+	l := logic.NewGetFilterAssetListLogic(ctx, s.svcCtx)
+	return l.GetFilterAssetList(in)
 }
