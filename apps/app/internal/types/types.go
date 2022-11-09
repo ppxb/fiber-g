@@ -2,67 +2,32 @@
 package types
 
 type Asset struct {
-	ProjectId       string `json:"projectId"`
-	SonProjectId    string `json:"sonProjectId"`
-	PartProjectId   string `json:"partProjectId"`
-	ProjectName     string `json:"projectName"`
-	SonProjectName  string `json:"sonProjectName"`
-	PartProjectName string `json:"partProjectName"`
-	Serial          string `json:"serial"`
-	Name            string `json:"name"`
-	Type            string `json:"type"`
-	Kind            string `json:"kind"`
-	SubDistrict     string `json:"subDistrict"`
-	Brand           string `json:"brand"`
-	Specs           string `json:"specs"`
-	Unit            string `json:"unit"`
-	Params          string `json:"params"`
-	Value           string `json:"value"`
-	Address         string `json:"address"`
-	Long            string `json:"long"`
-	Lat             string `json:"lat"`
-	ImgUrl          string `json:"imgUrl"`
-	SystemLoginUrl  string `json:"systemLoginUrl"`
-	SystemLoginPwd  string `json:"systemLoginPwd"`
-	IotNetSerial    string `json:"iotNetSerial"`
-	NetStatus       string `json:"netStatus"`
-	EmeterSerial    string `json:"emeterSerial"`
-	EmeterStatus    string `json:"emeterStatus"`
-}
-
-type UploadAsset struct {
-	ProjectName     string `json:"projectName"`
-	SonProjectName  string `json:"sonProjectName"`
-	PartProjectName string `json:"partProjectName"`
-	Serial          string `json:"serial"`
-	Name            string `json:"name"`
-	Type            string `json:"type"`
-	Kind            string `json:"kind"`
-	SubDistrict     string `json:"subDistrict"`
-	Brand           string `json:"brand"`
-	Specs           string `json:"specs"`
-	Unit            string `json:"unit"`
-	Params          string `json:"params"`
-	Value           string `json:"value"`
-	Address         string `json:"address"`
-	Long            string `json:"long"`
-	Lat             string `json:"lat"`
-	ImgUrl          string `json:"imgUrl"`
-	SystemLoginUrl  string `json:"systemLoginUrl"`
-	SystemLoginPwd  string `json:"systemLoginPwd"`
-	IotNetSerial    string `json:"iotNetSerial"`
-	NetStatus       string `json:"netStatus"`
-	EmeterSerial    string `json:"emeterSerial"`
-	EmeterStatus    string `json:"emeterStatus"`
-}
-
-type CreateAssetResp struct {
-	UUID string `json:"uuid"`
-}
-
-type ImportAssetResp struct {
-	Success int64 `json:"success"`
-	Fail    int64 `json:"fail"`
+	ProjectId       string  `json:"projectId"`
+	SonProjectId    string  `json:"sonProjectId"`
+	PartProjectId   string  `json:"partProjectId"`
+	ProjectName     string  `json:"projectName"`
+	SonProjectName  string  `json:"sonProjectName"`
+	PartProjectName string  `json:"partProjectName"`
+	Serial          string  `json:"serial"`
+	Name            string  `json:"name"`
+	Type            string  `json:"type"`
+	Kind            string  `json:"kind"`
+	SubDistrict     string  `json:"subDistrict"`
+	Brand           string  `json:"brand"`
+	Specs           string  `json:"specs"`
+	Unit            string  `json:"unit"`
+	Params          string  `json:"params"`
+	Value           float64 `json:"value"`
+	Address         string  `json:"address"`
+	Long            string  `json:"long"`
+	Lat             string  `json:"lat"`
+	ImgUrl          string  `json:"imgUrl"`
+	SystemLoginUrl  string  `json:"systemLoginUrl"`
+	SystemLoginPwd  string  `json:"systemLoginPwd"`
+	IotNetSerial    string  `json:"iotNetSerial"`
+	NetStatus       string  `json:"netStatus"`
+	EmeterSerial    string  `json:"emeterSerial"`
+	EmeterStatus    string  `json:"emeterStatus"`
 }
 
 type Project struct {
