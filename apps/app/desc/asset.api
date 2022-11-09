@@ -41,11 +41,8 @@ type (
     FilterAssetListReq {
         Page int64 `json:"page"`
         PageSize int64 `json:"pageSize"`
-        Query
-    }
-
-    Query {
-        UUID string `json:"uuid"`
+        Name string `json:"name"`
+        Level int64 `json:"level"`
     }
 )
 

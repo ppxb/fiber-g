@@ -31,9 +31,11 @@ func (l *GetFilterAssetListLogic) GetFilterAssetList(req *types.FilterAssetListR
 		return nil, errorx.NewDefaultError("page 或 pageSize 超过了允许的值")
 	}
 
-	res, err := l.svcCtx.AssetRpc.GetAssetList(context.Background(), &asset.PageReq{
+	res, err := l.svcCtx.AssetRpc.GetFilterAssetList(context.Background(), &asset.ProjectFilterReq{
 		Page:     int64(req.Page),
 		PageSize: int64(req.PageSize),
+		Level:    req.Level,
+		Name:     req.Name,
 	})
 	if err != nil {
 		return nil, errorx.NewDefaultError(err.Error())

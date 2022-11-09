@@ -19,7 +19,7 @@ type Asset struct {
 	Brand           string  `json:"brand" gorm:"comment:品牌"`
 	Specs           string  `json:"specs" gorm:"comment:型号"`
 	Unit            string  `json:"unit" gorm:"comment:单位"`
-	Params          string  `json:"params" gorm:"comment:型号规格'"`
+	Params          string  `json:"params" gorm:"type:text;comment:型号规格'"`
 	Value           float64 `json:"value" gorm:"comment:价值"`
 	Address         string  `json:"address" gorm:"comment:地址"`
 	Long            string  `json:"long" gorm:"comment:经度"`

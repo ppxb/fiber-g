@@ -54,6 +54,7 @@ message ProjectInfo{
   string name = 2;
   string parentProjectId = 3;
   string createdAt = 4;
+  int64 level = 5;
 }
 
 message UploadReq{
@@ -110,13 +111,15 @@ message AssetListResp{
 message ProjectFilterReq{
   int64 page = 1;
   int64 pageSize = 2;
-  string uuid = 3;
+  string name = 3;
+  int64 level = 4;
 }
 
 service Asset{
   rpc CreateAsset(CreateAssetReq)returns(CreateAssetResp);
   // create project
   rpc CreateProject(ProjectReq)returns(ProjectResp);
+  // get project list
   rpc GetProjectList(ProjectListReq)returns(ProjectListResp);
   rpc ImportAssets(UploadReq)returns(UploadResp);
 

@@ -33,6 +33,7 @@ func (s *AssetServer) CreateProject(ctx context.Context, in *asset.ProjectReq) (
 	return l.CreateProject(in)
 }
 
+// get project list
 func (s *AssetServer) GetProjectList(ctx context.Context, in *asset.ProjectListReq) (*asset.ProjectListResp, error) {
 	l := logic.NewGetProjectListLogic(ctx, s.svcCtx)
 	return l.GetProjectList(in)

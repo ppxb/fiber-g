@@ -83,11 +83,8 @@ type Project struct {
 }
 
 type FilterAssetListReq struct {
-	Page     int64 `json:"page"`
-	PageSize int64 `json:"pageSize"`
-	Query
-}
-
-type Query struct {
-	UUID string `json:"uuid"`
+	Page     int64  `json:"page"`
+	PageSize int64  `json:"pageSize"`
+	Name     string `json:"name"`
+	Level    int64  `json:"level"`
 }
