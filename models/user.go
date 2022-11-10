@@ -18,7 +18,7 @@ type User struct {
 	Name       string          `json:"name" gorm:"size:64;comment:姓名"`
 	Status     *uint           `json:"status" gorm:"type:tinyint(1);default:1;comment:账号状态(0-禁用 1-启用)"`
 	RoleId     uint            `json:"roleId" gorm:"comment:角色ID"`
-	Role       uint            `json:"role" gorm:"foreignKey:RoleId;comment:角色"`
+	Role       Role            `json:"role" gorm:"foreignKey:RoleId"`
 	LastLogin  carbon.DateTime `json:"lastLogin" gorm:"comment:最后登录时间"`
 	Locked     uint            `json:"locked" gorm:"type:tinyint(1);default:0;comment:账户锁定(0-未锁定 1-已锁定)"`
 	LockExpire int64           `json:"lockExpire" gorm:"comment:账户锁定剩余时间"`
