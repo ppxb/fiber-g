@@ -4,7 +4,7 @@ import (
 	"fiber-g/apps/app/internal/config"
 	"fiber-g/apps/asset/assetclient"
 	"fiber-g/apps/dept/rpc/deptclient"
-	"fiber-g/apps/user/rpc/userclient"
+	"fiber-g/apps/user/userclient"
 	"github.com/zeromicro/go-zero/zrpc"
 )
 

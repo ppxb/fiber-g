@@ -5,16 +5,15 @@ package userclient
 
 import (
 	"context"
-
-	"fiber-g/apps/user/rpc/user"
+	user2 "fiber-g/apps/user/user"
 
 	"github.com/zeromicro/go-zero/zrpc"
 	"google.golang.org/grpc"
 )
 
 type (
-	CreateUserReq  = user.CreateUserReq
-	CreateUserResp = user.CreateUserResp
+	CreateUserReq  = user2.CreateUserReq
+	CreateUserResp = user2.CreateUserResp
 
 	User interface {
 		CreateUser(ctx context.Context, in *CreateUserReq, opts ...grpc.CallOption) (*CreateUserResp, error)
@@ -32,6 +31,6 @@ func NewUser(cli zrpc.Client) User {
 }
 
 func (m *defaultUser) CreateUser(ctx context.Context, in *CreateUserReq, opts ...grpc.CallOption) (*CreateUserResp, error) {
-	client := user.NewUserClient(m.cli.Conn())
+	client := user2.NewUserClient(m.cli.Conn())
 	return client.CreateUser(ctx, in, opts...)
 }

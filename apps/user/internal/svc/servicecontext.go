@@ -1,7 +1,7 @@
 package svc
 
 import (
-	"fiber-g/apps/asset/internal/config"
+	"fiber-g/apps/user/internal/config"
 	"github.com/zeromicro/go-zero/core/logx"
 	"gorm.io/gorm"
 )
@@ -14,7 +14,7 @@ type ServiceContext struct {
 func NewServiceContext(c config.Config) *ServiceContext {
 	db, err := c.DatabaseConf.NewGormDb()
 	if err != nil {
-		logx.Errorw("asset database error", logx.Field("detail", err.Error()))
+		logx.Errorw("user database error", logx.Field("detail", err.Error()))
 	}
 
 	return &ServiceContext{

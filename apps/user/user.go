@@ -1,13 +1,14 @@
 package main
 
 import (
+	"fiber-g/apps/user/internal/config"
+	"fiber-g/apps/user/internal/server"
+	"fiber-g/apps/user/internal/svc"
+	"fiber-g/apps/user/user"
+	"fiber-g/models"
 	"flag"
 	"fmt"
-
-	"fiber-g/apps/user/rpc/internal/config"
-	"fiber-g/apps/user/rpc/internal/server"
-	"fiber-g/apps/user/rpc/internal/svc"
-	"fiber-g/apps/user/rpc/user"
+	"github.com/zeromicro/go-zero/core/logx"
 
 	"github.com/zeromicro/go-zero/core/conf"
 	"github.com/zeromicro/go-zero/core/service"
@@ -34,6 +35,13 @@ func main() {
 	})
 	defer s.Stop()
 
-	fmt.Printf("Starting rpc server at %s...\n", c.ListenOn)
+	err := ctx.Db.AutoMigrate(
+		&models.User{},
+	)
+	if err != nil {
+		logx.Errorw("user database error", logx.Field("detail", err.Error()))
+	}
+
+	fmt.Printf("Starting user rpc server at %s...\n", c.ListenOn)
 	s.Start()
 }

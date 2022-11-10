@@ -5,15 +5,14 @@ package server
 
 import (
 	"context"
-
-	"fiber-g/apps/user/rpc/internal/logic"
-	"fiber-g/apps/user/rpc/internal/svc"
-	"fiber-g/apps/user/rpc/user"
+	"fiber-g/apps/user/internal/logic"
+	"fiber-g/apps/user/internal/svc"
+	user2 "fiber-g/apps/user/user"
 )
 
 type UserServer struct {
 	svcCtx *svc.ServiceContext
-	user.UnimplementedUserServer
+	user2.UnimplementedUserServer
 }
 
 func NewUserServer(svcCtx *svc.ServiceContext) *UserServer {
@@ -22,7 +21,7 @@ func NewUserServer(svcCtx *svc.ServiceContext) *UserServer {
 	}
 }
 
-func (s *UserServer) CreateUser(ctx context.Context, in *user.CreateUserReq) (*user.CreateUserResp, error) {
+func (s *UserServer) CreateUser(ctx context.Context, in *user2.CreateUserReq) (*user2.CreateUserResp, error) {
 	l := logic.NewCreateUserLogic(ctx, s.svcCtx)
 	return l.CreateUser(in)
 }

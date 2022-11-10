@@ -2,9 +2,8 @@ package logic
 
 import (
 	"context"
-
-	"fiber-g/apps/user/rpc/internal/svc"
-	"fiber-g/apps/user/rpc/user"
+	"fiber-g/apps/user/internal/svc"
+	"fiber-g/apps/user/user"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )

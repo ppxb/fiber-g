@@ -44,6 +44,6 @@ func main() {
 		logx.Errorw("database error", logx.Field("detail", err.Error()))
 	}
 
-	fmt.Printf("Starting rpc server at %s...\n", c.ListenOn)
+	fmt.Printf("Starting asset rpc server at %s...\n", c.ListenOn)
 	s.Start()
 }
