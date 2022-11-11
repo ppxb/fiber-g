@@ -66,8 +66,6 @@ func main() {
 			if err := ctx.Db.Table("tb_user").Create(&initSuperUser).Error; err != nil {
 				logx.Errorw("init user data error", logx.Field("detail", err.Error()))
 			}
-		} else {
-			logx.Errorw("user database error", logx.Field("detail", err.Error()))
 		}
 
 	}

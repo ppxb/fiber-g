@@ -29,7 +29,7 @@ func (l *GetProjectListLogic) GetProjectList(in *asset.ProjectListReq) (*asset.P
 	var projects []*asset.ProjectInfo
 	var total int64
 
-	err := l.svcCtx.Db.Table("projects").Count(&total).Offset(int(in.Page * in.PageSize)).Limit(int(in.PageSize)).Find(&projects).Error
+	err := l.svcCtx.Db.Table("tb_project").Count(&total).Offset(int(in.Page * in.PageSize)).Limit(int(in.PageSize)).Find(&projects).Error
 	if err != nil {
 		return nil, status.Error(codes.Internal, "服务器内部错误")
 	}

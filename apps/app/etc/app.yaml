@@ -2,6 +2,10 @@ Name: app
 Host: 0.0.0.0
 Port: 8000
 
+RedisConf:
+  Host: 127.0.0.1:6379
+  Type: node
+
 DeptRpc:
   Etcd:
     Hosts:
@@ -22,3 +26,30 @@ AssetRpc:
       - 127.0.0.1:2379
     Key: asset.rpc
   NonBlock: true
+
+DatabaseConf:
+  Type: mysql
+  Host: 127.0.0.1
+  Port: 3306
+  Config:
+  DbName: fiber_app
+  Username: root
+  Password: "123456"
+  MaxIdleConn: 10
+  MaxOpenConn: 100
+  LogMode: error
+  TablePrefix: tb
+  NoSql: true
+
+CasbinConf:
+  ModelConf: |
+    [request_definition]
+    r = sub, obj, act
+    [policy_definition]
+    p = sub, obj, act
+    [role_definition]
+    g = _, _
+    [policy_effect]
+    e = some(where (p.eft == allow))
+    [matchers]
+    m = r.sub == p.sub && keyMatch2(r.obj,p.obj) && r.act == p.act
